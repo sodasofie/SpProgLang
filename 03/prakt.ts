@@ -136,7 +136,8 @@ function cancelLesson(lessonId: number): void {
     schedule = schedule.filter(lesson => lesson.courseId !== lessonId);
 }
 
-// --- Тестування --- npx ts-node pr_03.ts
+
+// --- Тестування --- npx ts-node prakt.ts
 addProfessor({ id: 1, name: "Олена", department: "Українська мова" });
 addProfessor({ id: 2, name: "Михайло", department: "Вища математика" });
 addProfessor({ id: 3, name: "Валерій", department: "Фізика" });
@@ -159,7 +160,7 @@ addLesson({
     courseId: 2,
     professorId: 2,
     classroomNumber: "102",
-    dayOfWeek: "Понеділок",
+    dayOfWeek: "Вівторок",
     timeSlot: "9:45-11:20"
 });
 
@@ -171,6 +172,13 @@ addLesson({
     timeSlot: "8:00-9:35"
 });
 
+addLesson({
+    courseId: 3,
+    professorId: 3,
+    classroomNumber: "101",
+    dayOfWeek: "Середа",
+    timeSlot: "11:45-13:20"
+});
 
 console.log("Тест 1: Додаємо заняття з конфліктом");
 const result1 = addLesson({
@@ -192,16 +200,16 @@ const conflictCheck = validateLesson({
     timeSlot: "8:00-9:35"
 });
 if (conflictCheck) {
-    console.log("Очікується: ScheduleConflict (ProfessorConflict / ClassroomConflict)");
+    console.log("Очікується: ProfessorConflict чи ClassroomConflict");
     console.log("Отримано: " + conflictCheck.type + "\n"); 
 } else {
     console.log("Очікується: null");
     console.log("Отримано: null\n");
 }
 
-console.log("Тест 3: Пошук вільних аудиторій");
-const availableClassrooms = findAvailableClassrooms("9:45-11:20", "Понеділок");
-console.log("Очікується: " + '["101","103"]'); 
+console.log("Тест 3: Пошук вільних аудиторій в Понеділок о 8:00-9:35");
+const availableClassrooms = findAvailableClassrooms("8:00-9:35", "Понеділок");
+console.log("Очікується: " + '["102"]'); 
 console.log("Отримано: " + JSON.stringify(availableClassrooms) + "\n");
 
 console.log("Тест 4: Розклад професора");
